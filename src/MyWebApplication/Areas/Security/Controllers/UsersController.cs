@@ -11,39 +11,33 @@ namespace MyWebApplication.Areas.Security.Controllers
     public class UsersController : Controller
     {
 
-        private IList<UserModelView> Users
+        public UserModelView GetUser(Guid id)
         {
-            get
+
+            using (var db = new DatabaseContext())
             {
-                if (Session["data"] == null)
-                {
-                   Session["data"] = new List<UserModelView>(){
-                   new UserModelView {
-                Id = Guid.NewGuid(),
-                Name = "Ralp Yosores",
-                Hobby ="Dancing",
-                Gender = "Male",
-                Age = 21
-                },
-                 new UserModelView
-                {
-                Id = Guid.NewGuid(),  
-                Name = "Ralppy",
-                Hobby ="Singin",
-                Gender = "Female",
-                Age = 21
-                }
-            };
- 
-                       
-               }
-                return Session["data"] as List<UserModelView>;
+
+                return (from user in db.Users
+                        where user.Id == id
+                        select new UserModelView
+                            {
+
+                                Id = user.Id,
+                                Name = user.Name,
+                                Hobby = user.Hobby,
+                                Gender = user.Gender,
+                                Age = user.Age
+
+
+                            }).FirstOrDefault();
+
             }
+
         }
         // GET: Security/User
         public ActionResult Index()
-        {   
-            using (var db= new DatabaseContext())
+        {
+            using (var db = new DatabaseContext())
             {
                 var users = (from user in db.Users
                              select new UserModelView
@@ -52,19 +46,20 @@ namespace MyWebApplication.Areas.Security.Controllers
                                  Id = user.Id,
                                  Name = user.Name,
                                  Hobby = user.Hobby,
+                                 Gender = user.Gender,
                                  Age = user.Age
                              }).ToList();
                 return View(users);
             }
-       
-        
+
+
         }
 
         // GET: Security/User/Details/5
         public ActionResult Details(Guid id)
         {
-            var ur = Users.FirstOrDefault(user => user.Id == id);
-            return View(ur);
+
+            return View(GetUser(id));
         }
 
         // GET: Security/User/Create
@@ -93,8 +88,8 @@ namespace MyWebApplication.Areas.Security.Controllers
             {
                 if (ModelState.IsValid == false)
                     return View();
-                     
-                using (var db= new DatabaseContext())
+
+                using (var db = new DatabaseContext())
                 {
                     db.Users.Add(new User
                     {
@@ -116,31 +111,34 @@ namespace MyWebApplication.Areas.Security.Controllers
         }
 
 
-          
+
 
         // GET: Security/User/Edit/5
         public ActionResult Edit(Guid id)
         {
-            var edit = Users.FirstOrDefault(user => user.Id == id);
-            return View(edit);
+            return View(GetUser(id));
         }
 
         // POST: Security/User/Edit/5
         [HttpPost]
-        public ActionResult Edit(Guid id,UserModelView viewModel)
+        public ActionResult Edit(Guid id, UserModelView modelView)
         {
             try
             {
-                var edit = Users.FirstOrDefault(user => user.Id == id);
-                edit.Name = viewModel.Name;
-                edit.Hobby = viewModel.Hobby;
-                edit.Age = viewModel.Age;
-                edit.Gender = viewModel.Gender;
 
-               
+                using (var db = new DatabaseContext())
+                {
 
+                    var user = db.Users.FirstOrDefault(u => u.Id == id);
+                    user.Name = modelView.Name;
+                    user.Hobby = modelView.Hobby;
+                    user.Age = modelView.Age;
+                    user.Gender = modelView.Gender;
 
-                return RedirectToAction("Index");
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
             }
             catch
             {
@@ -151,25 +149,37 @@ namespace MyWebApplication.Areas.Security.Controllers
         // GET: Security/User/Delete/5
         public ActionResult Delete(Guid id)
         {
-            var usr = Users.FirstOrDefault(user => user.Id == id);
-            return View(usr);
+
+            return View(GetUser(id));
         }
 
         // POST: Security/User/Delete/5
         [HttpPost]
-        public ActionResult Delete(Guid id,FormCollection collection)
+        public ActionResult Delete(Guid id, FormCollection collection)
         {
             try
             {
-                var usr = Users.FirstOrDefault(user => user.Id == id);
-                Users.Remove(usr);
+                using (var db = new DatabaseContext())
+                {
+                    var user = db.Users.FirstOrDefault(u => u.Id == id);
+                    {
+                        db.Users.Remove(user);
+                        db.SaveChanges();
 
-                return RedirectToAction("Index");
+                        return RedirectToAction("Index");
+                    }
+
+
+                }
+
             }
+
             catch
             {
                 return View();
             }
+
+
         }
     }
 }

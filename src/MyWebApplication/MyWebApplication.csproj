@@ -183,10 +183,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Security\Views\web.config" />
-    <Content Include="Areas\Security\Views\User\Create.cshtml" />
-    <Content Include="Areas\Security\Views\User\Delete.cshtml" />
-    <Content Include="Areas\Security\Views\User\Details.cshtml" />
-    <Content Include="Areas\Security\Views\User\Edit.cshtml" />
     <Content Include="Areas\Security\Views\Users\Index.cshtml" />
     <Content Include="Areas\Security\Views\Users\Edit.cshtml" />
     <Content Include="Areas\Security\Views\Users\Delete.cshtml" />

@@ -53,6 +53,7 @@
                     @Html.RadioButtonFor(model => model.Gender, "Male", false) Male |
                     @Html.RadioButtonFor(model => model.Gender, "Female", false) Female
                 </fieldset>
+                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
             </div>
         </div>
 
