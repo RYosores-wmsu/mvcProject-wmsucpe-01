@@ -11,7 +11,7 @@ namespace MyWebApplication.Areas.Security.Controllers
     public class UsersController : Controller
     {
 
-        public UserModelView GetUser(Guid id)
+        public UserModelView GetUser(int id)
         {
 
             using (var db = new DatabaseContext())
@@ -26,7 +26,8 @@ namespace MyWebApplication.Areas.Security.Controllers
                                 Name = user.Name,
                                 Hobby = user.Hobby,
                                 Gender = user.Gender,
-                                Age = user.Age
+                                Age = user.Age,
+                                EmploymentDate = user.EmploymentDate
 
 
                             }).FirstOrDefault();
@@ -47,7 +48,8 @@ namespace MyWebApplication.Areas.Security.Controllers
                                  Name = user.Name,
                                  Hobby = user.Hobby,
                                  Gender = user.Gender,
-                                 Age = user.Age
+                                 Age = user.Age,
+                                 EmploymentDate = user.EmploymentDate
                              }).ToList();
                 return View(users);
             }
@@ -56,7 +58,7 @@ namespace MyWebApplication.Areas.Security.Controllers
         }
 
         // GET: Security/User/Details/5
-        public ActionResult Details(Guid id)
+        public ActionResult Details(int id)
         {
 
             return View(GetUser(id));
@@ -93,7 +95,7 @@ namespace MyWebApplication.Areas.Security.Controllers
                 {
                     db.Users.Add(new User
                     {
-                        Id = Guid.NewGuid(),
+                        //Id = Guid.NewGuid(),
                         Name = viewModel.Name,
                         Hobby = viewModel.Hobby,
                         Gender = viewModel.Gender,
@@ -114,14 +116,14 @@ namespace MyWebApplication.Areas.Security.Controllers
 
 
         // GET: Security/User/Edit/5
-        public ActionResult Edit(Guid id)
+        public ActionResult Edit(int id)
         {
             return View(GetUser(id));
         }
 
         // POST: Security/User/Edit/5
         [HttpPost]
-        public ActionResult Edit(Guid id, UserModelView modelView)
+        public ActionResult Edit(int id, UserModelView modelView)
         {
             try
             {
@@ -147,7 +149,7 @@ namespace MyWebApplication.Areas.Security.Controllers
         }
 
         // GET: Security/User/Delete/5
-        public ActionResult Delete(Guid id)
+        public ActionResult Delete(int id)
         {
 
             return View(GetUser(id));
@@ -155,7 +157,7 @@ namespace MyWebApplication.Areas.Security.Controllers
 
         // POST: Security/User/Delete/5
         [HttpPost]
-        public ActionResult Delete(Guid id, FormCollection collection)
+        public ActionResult Delete(int id, FormCollection collection)
         {
             try
             {
