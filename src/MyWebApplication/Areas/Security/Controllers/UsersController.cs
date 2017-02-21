@@ -23,8 +23,8 @@ namespace MyWebApplication.Areas.Security.Controllers
                             {
 
                                 Id = user.Id,
-                                Name = user.Name,
-                                Hobby = user.Hobby,
+                                FirstName = user.FirstName,
+                                LastName = user.LastName,
                                 Gender = user.Gender,
                                 Age = user.Age,
                                 EmploymentDate = user.EmploymentDate
@@ -45,8 +45,8 @@ namespace MyWebApplication.Areas.Security.Controllers
                              {
 
                                  Id = user.Id,
-                                 Name = user.Name,
-                                 Hobby = user.Hobby,
+                                 FirstName = user.FirstName,
+                                 LastName = user.LastName,
                                  Gender = user.Gender,
                                  Age = user.Age,
                                  EmploymentDate = user.EmploymentDate
@@ -96,10 +96,11 @@ namespace MyWebApplication.Areas.Security.Controllers
                     db.Users.Add(new User
                     {
                         //Id = Guid.NewGuid(),
-                        Name = viewModel.Name,
-                        Hobby = viewModel.Hobby,
+                        FirstName = viewModel.FirstName,
+                        LastName = viewModel.LastName,
                         Gender = viewModel.Gender,
-                        Age = viewModel.Age
+                        Age = viewModel.Age,
+                         EmploymentDate = viewModel.EmploymentDate
 
                     });
                     db.SaveChanges();
@@ -132,11 +133,11 @@ namespace MyWebApplication.Areas.Security.Controllers
                 {
 
                     var user = db.Users.FirstOrDefault(u => u.Id == id);
-                    user.Name = modelView.Name;
-                    user.Hobby = modelView.Hobby;
+                    user.FirstName = modelView.FirstName;
+                    user.LastName = modelView.LastName;
                     user.Age = modelView.Age;
                     user.Gender = modelView.Gender;
-
+                    user.EmploymentDate = modelView.EmploymentDate;
                     db.SaveChanges();
 
                     return RedirectToAction("Index");

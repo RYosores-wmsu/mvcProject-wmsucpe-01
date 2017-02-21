@@ -31,19 +31,19 @@
 
             <hr />
             <dt>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.FirstName)
             </dt>
 
             <dd class="name1">
-                @Html.DisplayFor(model => model.Name)
+                @Html.DisplayFor(model => model.FirstName)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Hobby)
+                @Html.DisplayNameFor(model => model.LastName)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Hobby)
+                @Html.DisplayFor(model => model.LastName)
             </dd>
             <dt>
                 @Html.DisplayNameFor(model => model.Gender)
@@ -59,6 +59,13 @@
 
             <dd>
                 @Html.DisplayFor(model => model.Age)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.EmploymentDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EmploymentDate)
             </dd>
 
 </dl>
