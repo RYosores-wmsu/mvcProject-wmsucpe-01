@@ -2,6 +2,7 @@
 using MyWebApplication.Dal;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -93,24 +94,60 @@ namespace MyWebApplication.Areas.Security.Controllers
 
                 using (var db = new DatabaseContext())
                 {
-                    db.Users.Add(new User
-                    {
-                        //Id = Guid.NewGuid(),
-                        FirstName = viewModel.FirstName,
-                        LastName = viewModel.LastName,
-                        Gender = viewModel.Gender,
-                        Age = viewModel.Age,
-                         EmploymentDate = viewModel.EmploymentDate
 
-                    });
-                    db.SaveChanges();
+                    var sql = @"exec uspCreateUser @guid,
+	                                @fname,
+	                                @lname,
+	                                @age,
+	                                @gender,
+	                                @empDate,
+	                                @school,
+	                                @yrAttended";
+
+                    var result = db.Database.ExecuteSqlCommand(sql,
+                        new SqlParameter("@guid", Guid.NewGuid()),
+                        new SqlParameter("@fname", viewModel.FirstName),
+                        new SqlParameter("@lname", viewModel.LastName),
+                        new SqlParameter("@age", viewModel.Age),
+                        new SqlParameter("@gender", viewModel.Gender),
+                        new SqlParameter("@empDate", DateTime.UtcNow),
+                        new SqlParameter("@school", "WMSU"),
+                        new SqlParameter("@yrAttended", "2002"));
+
+                    if (result > 1)
+                        return RedirectToAction("Index");
+                    else
+                        return View();
+
+                    //db.Users.Add(new User
+                    //{
+                    //    Id = Guid.NewGuid(),
+                    //    FirstName = viewModel.Firstname,
+                    //    LastName = viewModel.LastName,
+                    //    Age = viewModel.Age,
+                    //    Gender = viewModel.Gender
+                    //});
+                    //db.SaveChanges();
                 }
-                return RedirectToAction("Index");
-            }
-            catch
-            {
+
+                    //db.Users.Add(new User
+                  //  {
+                        //Id = Guid.NewGuid(),
+                       // FirstName = viewModel.FirstName,
+                 //       LastName = viewModel.LastName,
+                   //     Gender = viewModel.Gender,
+                     //   Age = viewModel.Age,
+                    //     EmploymentDate = viewModel.EmploymentDate
+             //                 /
+                  //  });
+                 //   db.SaveChanges();
+              //  }
+            //    return RedirectToAction("Index");
+           }
+           catch
+           {
                 return View();
-            }
+          }
         }
 
 
