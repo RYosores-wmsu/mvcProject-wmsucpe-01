@@ -29,6 +29,7 @@ namespace MyWebApplication.Areas.Security.Controllers
                                 Gender = user.Gender,
                                 Age = user.Age,
                                 EmploymentDate = user.EmploymentDate
+                            
 
 
                             }).FirstOrDefault();
@@ -50,7 +51,13 @@ namespace MyWebApplication.Areas.Security.Controllers
                                  LastName = user.LastName,
                                  Gender = user.Gender,
                                  Age = user.Age,
-                                 EmploymentDate = user.EmploymentDate
+                                 EmploymentDate = user.EmploymentDate,
+                                 Educations = user.Educations.Select(s => 
+                                  new EducationViewModel 
+                             { 
+                                 School = s.School, 
+                                 YearAttended = s.YearAttended
+                             }).ToList()
                              }).ToList();
                 return View(users);
             }
@@ -94,11 +101,9 @@ namespace MyWebApplication.Areas.Security.Controllers
 
                 using (var db = new DatabaseContext())
                 {
-
                     var sql = @"exec uspCreateUser @guid,
 	                                @fname,
-	                                @lname,
-	                                @age,
+                                @lname,	                                @age,
 	                                @gender,
 	                                @empDate,
 	                                @school,
@@ -108,9 +113,9 @@ namespace MyWebApplication.Areas.Security.Controllers
                         new SqlParameter("@guid", Guid.NewGuid()),
                         new SqlParameter("@fname", viewModel.FirstName),
                         new SqlParameter("@lname", viewModel.LastName),
-                        new SqlParameter("@age", viewModel.Age),
-                        new SqlParameter("@gender", viewModel.Gender),
-                        new SqlParameter("@empDate", DateTime.UtcNow),
+                       new SqlParameter("@age", viewModel.Age),
+                       new SqlParameter("@gender", viewModel.Gender),
+                       new SqlParameter("@empDate", DateTime.UtcNow),
                         new SqlParameter("@school", "WMSU"),
                         new SqlParameter("@yrAttended", "2002"));
 
@@ -119,35 +124,27 @@ namespace MyWebApplication.Areas.Security.Controllers
                     else
                         return View();
 
-                    //db.Users.Add(new User
-                    //{
-                    //    Id = Guid.NewGuid(),
-                    //    FirstName = viewModel.Firstname,
-                    //    LastName = viewModel.LastName,
-                    //    Age = viewModel.Age,
-                    //    Gender = viewModel.Gender
-                    //});
-                    //db.SaveChanges();
-                }
+                    //    db.Users.Add(new User
+                    //    {
+                    //       // Id = Guid.NewGuid(),
+                    //       FirstName = viewModel.FirstName,
+                    //       LastName = viewModel.LastName,
+                    //       Age = viewModel.Age,
+                    //      Gender = viewModel.Gender,
+                    //      EmploymentDate = viewModel.EmploymentDate
+                    //    });
+                    //    db.SaveChanges();
+                    //}
 
-                    //db.Users.Add(new User
-                  //  {
-                        //Id = Guid.NewGuid(),
-                       // FirstName = viewModel.FirstName,
-                 //       LastName = viewModel.LastName,
-                   //     Gender = viewModel.Gender,
-                     //   Age = viewModel.Age,
-                    //     EmploymentDate = viewModel.EmploymentDate
-             //                 /
-                  //  });
-                 //   db.SaveChanges();
-              //  }
-            //    return RedirectToAction("Index");
-           }
-           catch
-           {
+
+
+                   // return RedirectToAction("Index");
+                }
+            }
+            catch
+            {
                 return View();
-          }
+            }
         }
 
 

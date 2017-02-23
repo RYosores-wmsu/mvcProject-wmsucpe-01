@@ -32,7 +32,7 @@ content-action{
 }
 
 .btn.delete-btn-primary {
- margin-left: 70px;
+    margin-left: 203px;
     margin-top: 10px;
 }
 .btn-success {
@@ -105,7 +105,7 @@ dt {
     width: 400px;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12) !important;
     margin-top: 45px;
-    background-position: 10px 80px;
+    background-position: 10px 102px;
    
 }
 .name1 {
@@ -128,7 +128,7 @@ dd {
 .dl-horizontal {
     margin-left: 400px;
 }
-.content-action\; {
+.content-action{
     margin: auto;
     font-size: 14px;
     justify-content: center;
@@ -166,6 +166,39 @@ fieldset {
     margin: 2px;
    
 }
+input.Empdate {
+  
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #555;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+strong {
+    margin-left: 82px;
+    margin-top: 22px;
+}
+label.control-label.col-md-2 {
+    padding-right: 0px;
+}
+.form-group-fourth {
+    margin-top: 22px;
+}
+
+.form-group-fourth {
+    margin-top: 22px;
+    margin-left: -16px;
+}
+
 
 .col-md-6 {
     
